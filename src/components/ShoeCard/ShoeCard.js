@@ -31,6 +31,17 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  const BANNER_STYLES = {
+    'on-sale' : {
+      backgroundColor: COLORS.primary,
+      message: 'Sale',
+    },
+    'new-release' : {
+      backgroundColor: COLORS.secondary,
+      message: 'Just Released!',
+    },
+  }
+  
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
@@ -47,16 +58,39 @@ const ShoeCard = ({
           {variant == 'on-sale' ? <SalePrice>{formatPrice(salePrice)}</SalePrice> : null}
         </Row>
       </Wrapper>
+        {variant == 'on-sale' ? <Banner style={{'--background-color' : BANNER_STYLES[variant].backgroundColor}}>{BANNER_STYLES[variant].message}</Banner> : 
+         variant == 'new-release' ? <Banner style={{'--background-color' : BANNER_STYLES[variant].backgroundColor}}>{BANNER_STYLES[variant].message}</Banner> :  
+         null}
     </Link>
   );
 };
 
 const Link = styled.a`
+  position: relative;
   text-decoration: none;
   color: inherit;
+  isolation: isolate;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  position: relative;
+`;
+
+const Banner = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 12px;
+  margin-right: -4px;
+  
+  padding: 9px;
+  border-radius: 2px;
+
+  background-color: var(--background-color);
+  color: ${COLORS.white};
+  font-weight: ${WEIGHTS.medium};
+  font-size: 14px;
+`
 
 const ImageWrapper = styled.div`
   position: relative;
@@ -64,6 +98,7 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  border-radius: 16px 16px 4px 4px;
 `;
 
 const Row = styled.div`
